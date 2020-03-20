@@ -1,11 +1,17 @@
 package com.cron.parser;
 
 import com.cron.parser.impl.CronParser;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CronParserTest {
 
-    Parser parser = new CronParser();
+    private Parser parser;
+
+    @Before
+    public void setup() {
+        parser = new CronParser();
+    }
 
     @Test
     public void shouldSupplyValidFormatInterpretationFirst() {
