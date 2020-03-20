@@ -2,6 +2,12 @@ package com.cron.parser.model;
 
 import com.cron.parser.util.Range;
 
+/**
+ * FieldType enumeration. Provides information pertaining to the particular filed valid range, output alias and
+ * the expected position in the Cron expression (position variable).
+ *
+ * If a field is not defined here it cannot be interpreted.
+ */
 public enum FieldType {
 
     MINUTE(Range.between(0, 59), "minute", 0),

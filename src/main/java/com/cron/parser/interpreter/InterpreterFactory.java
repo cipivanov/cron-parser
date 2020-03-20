@@ -7,8 +7,14 @@ import static com.cron.parser.util.CronUtils.*;
 
 public abstract class InterpreterFactory {
 
-    public static AbstractInterpreter getInterpreter(CronField cronField) {
-
+    /**
+     * Returns the needed interpreter for supplied cron field based on the field tokens found.
+     * For field Tokens see @code CronUtils
+     *
+     * @param cronField cron field to be interpreted
+     * @return return a specific interpreter for the field supplied
+     */
+    public static Interpreter getInterpreter(CronField cronField) {
         if (isRangeSlashInterpreter(cronField)) {
             return new RangeSlashInterpreter(cronField);
         } else if (isListType(cronField)) {

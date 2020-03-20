@@ -9,7 +9,7 @@ public class Range<T> {
         return new Range<>(minimum, maximum);
     }
 
-    public Range(T minimum, T maximum) {
+    private Range(T minimum, T maximum) {
         this.minimum = minimum;
         this.maximum = maximum;
     }

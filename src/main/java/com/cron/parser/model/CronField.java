@@ -1,5 +1,10 @@
 package com.cron.parser.model;
 
+/**
+ * Cron Field model class.
+ *
+ * Encapsulates all the information about a single field.
+ */
 public class CronField {
 
     private FieldType type;
