@@ -62,8 +62,8 @@ Basic Cron parser capable of interpreting a valid standard Cron expression and o
 
 ### Supported symbols (field types):
 
-* *&ast* (“all values”) - used to select all values within a field. For example, “*” in the minute field means “every minute”.
-* *?* (“no specific value”) - useful when you need to specify something in one of the two fields in which the character is allowed, but not the other. For example, if I want my trigger to fire on a particular day of the month (say, the 10th), but don’t care what day of the week that happens to be, I would put “10” in the day-of-month field, and “?” in the day-of-week field. See the examples below for clarification.
+* \* - (“all values”) - used to select all values within a field. For example, “*” in the minute field means “every minute”.
+* *?* - (“no specific value”) - useful when you need to specify something in one of the two fields in which the character is allowed, but not the other. For example, if I want my trigger to fire on a particular day of the month (say, the 10th), but don’t care what day of the week that happens to be, I would put “10” in the day-of-month field, and “?” in the day-of-week field. See the examples below for clarification.
 * *-* - used to specify ranges. For example, “10-12” in the hour field means “the hours 10, 11 and 12”.
 * *,* - used to specify additional values. For example, “MON,WED,FRI” in the day-of-week field means “the days Monday, Wednesday, and Friday”.
 * */* - used to specify increments. For example, “0/15” in the seconds field means “the seconds 0, 15, 30, and 45”. And “5/15” in the seconds field means “the seconds 5, 20, 35, and 50”. You can also specify ‘/’ after the ‘’ character - in this case ‘’ is equivalent to having ‘0’ before the ‘/’. ‘1/3’ in the day-of-month field means “fire every 3 days starting on the first day of the month”.
@@ -76,4 +76,4 @@ Basic Cron parser capable of interpreting a valid standard Cron expression and o
 
 ## TODO's
 
-* Custom per-field validation capabilities
+* Custom per-field validation capabilities which will provide a safety net before starting the parsing effort
