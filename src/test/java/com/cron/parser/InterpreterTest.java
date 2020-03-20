@@ -14,9 +14,10 @@ public class InterpreterTest {
 
     @Test
     public void shouldInterpretMinuteList() {
-        List<String> expectedResult = Arrays.asList("0", "15", "30", "45");
+        List<String> expectedResult = Arrays.asList("1", "2", "3", "5", "20", "21", "22", "23", "24", "25",
+                "30", "31", "32", "33", "34", "35", "59");
 
-        CronField cronField = new CronField(MINUTE, "0,15,30,45");
+        CronField cronField = new CronField(MINUTE, "1,2,3,5,20-25,30-35,59");
         ListInterpreter listInterpreter = new ListInterpreter(cronField);
 
         assert listInterpreter.interpret().equals(expectedResult);
@@ -33,7 +34,7 @@ public class InterpreterTest {
     }
 
     @Test
-    public void shouldInterpretSingleValue() {
+    public void shouldInterpretDayOfTheMonthSingleValue() {
         List<String> expectedResult = Collections.singletonList("11");
 
         CronField cronField = new CronField(DAY_OF_THE_MONTH, "11");
@@ -43,7 +44,7 @@ public class InterpreterTest {
     }
 
     @Test
-    public void shouldInterpretSlashValue() {
+    public void shouldInterpretMonthOfTheYearSlashValue() {
         List<String> expectedResult = Arrays.asList("1", "6", "11");
 
         CronField cronField = new CronField(MONTH_OF_THE_YEAR, "1/5");
@@ -53,7 +54,7 @@ public class InterpreterTest {
     }
 
     @Test
-    public void shouldInterpretStarValue() {
+    public void shouldInterpretDayOfTheWeekStarValue() {
         List<String> expectedResult = Arrays.asList("1", "2", "3", "4", "5", "6", "7");
 
         CronField cronField = new CronField(DAY_OF_THE_WEEK, "*");
@@ -63,7 +64,7 @@ public class InterpreterTest {
     }
 
     @Test
-    public void shouldInterpretStarSlashValue() {
+    public void shouldInterpretDayOfTheWeekStarSlashValue() {
         List<String> expectedResult = Arrays.asList("1", "3", "5", "7");
 
         CronField cronField = new CronField(DAY_OF_THE_WEEK, "*/2");
@@ -73,7 +74,7 @@ public class InterpreterTest {
     }
 
     @Test
-    public void shouldInterpretRangeSlashValue() {
+    public void shouldInterpretDayOfTheWeekRangeSlashValue() {
         List<String> expectedResult = Arrays.asList("1", "4", "7", "10", "13", "16", "19", "22", "25", "28");
 
         CronField cronField = new CronField(DAY_OF_THE_WEEK, "1-30/3");

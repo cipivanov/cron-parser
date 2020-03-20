@@ -81,4 +81,19 @@ public class CronParserTest {
 
         assert expectedOutput.equals(actualOutput);
     }
+
+    @Test
+    public void shouldSupplyValidFormatInterpretationSixth() {
+        String expectedOutput =
+                "minute        1 2 3 5 20 21 22 23 24 25 30 31 32 33 34 35 59\n" +
+                        "hour          23\n" +
+                        "day of month  31\n" +
+                        "month         12\n" +
+                        "day of week   1 2 3 4 5 6 7\n" +
+                        "command       <no command>\n";
+
+        String actualOutput = parser.parse("1,2,3,5,20-25,30-35,59 23 31 12 *");
+
+        assert expectedOutput.equals(actualOutput);
+    }
 }
