@@ -12,15 +12,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.cron.parser.util.CronFormatter.formatInterpretationResult;
 import static com.cron.parser.util.RegexUtils.getFirstMatch;
 import static com.cron.parser.util.RegexUtils.getMatchGroup;
 
 
 public class CronParser implements Parser {
 
-    private static final String OUTPUT_ROW_FORMAT = "%-13s %s\n";
-
-    private static final String COMMAND_OUTPUT_ALIAS = "command";
     private static final String COMMAND_PLACEHOLDER = "<no command>";
 
     private static final String COMMAND_REGEX = "(?:\\S{1,}\\s){5}(.*)";
@@ -79,30 +77,5 @@ public class CronParser implements Parser {
      */
     private String getCronCommand(String cronExpression) {
         return getMatchGroup(cronExpression, COMMAND_REGEX, 1).orElse(COMMAND_PLACEHOLDER);
-    }
-
-    /**
-     * Formats the interpretation result and the command into a specific format
-     * <b>Format template:</b>
-     * minute        <space separated execution times>
-     * hour          <space separated execution times>
-     * day of month  <space separated execution times>
-     * month         <space separated execution times>
-     * day of week   <space separated execution times>
-     * command       <command>
-     *
-     * @param result  Cron expression interpretation result
-     * @param command Cron expression afferent command
-     * @return formatted String
-     */
-    private static String formatInterpretationResult(Map<FieldType, List<String>> result, String command) {
-        StringBuffer formattedInterpretationResult = new StringBuffer();
-        result.forEach((fieldType, value) -> formattedInterpretationResult
-                .append(String.format(OUTPUT_ROW_FORMAT, fieldType.getAlias(), String.join(" ", value))));
-
-        String formattedCommand = String.format(OUTPUT_ROW_FORMAT, COMMAND_OUTPUT_ALIAS, command);
-        formattedInterpretationResult.append(formattedCommand);
-
-        return formattedInterpretationResult.toString();
     }
 }
