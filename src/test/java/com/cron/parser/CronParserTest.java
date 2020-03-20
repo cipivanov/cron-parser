@@ -9,7 +9,6 @@ public class CronParserTest {
 
     @Test
     public void shouldEvaluateCronExpressionAndPrintResult() {
-        // only cron expression for now, no command
         cronParser.parse("*/15 0 1,15 * 1-5");
     }
 }
