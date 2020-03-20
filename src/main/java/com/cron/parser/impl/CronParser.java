@@ -18,7 +18,7 @@ import static com.cron.parser.util.RegexUtils.getMatchGroup;
 
 public class CronParser implements Parser {
 
-    private static final String OUTPUT_ROW_FORMAT = "%-14s %s\n";
+    private static final String OUTPUT_ROW_FORMAT = "%-13s %s\n";
 
     private static final String COMMAND_OUTPUT_ALIAS = "command";
     private static final String COMMAND_PLACEHOLDER = "<no command>";

@@ -6,7 +6,7 @@ import com.cron.parser.model.CronField;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cron.parser.util.CronUtils.ALL_VALUES_WITH_INTERVAL_STARTING_TOKEN;
+import static com.cron.parser.util.CronUtils.SLASH_TOKEN;
 
 public class SlashInterpreter extends AbstractInterpreter {
 
@@ -17,14 +17,17 @@ public class SlashInterpreter extends AbstractInterpreter {
     @Override
     public List<String> interpret() {
         List<String> executionTimes = new ArrayList<>();
-        for (int i = getMinimum(); i <= getMaximum(); i += getStep()) {
+        Integer start = getMinimum();
+        Integer end = getMaximum();
+        Integer step = getStep();
+        for (int i = start; i <= end; i += step) {
             executionTimes.add(String.valueOf(i));
         }
         return executionTimes;
     }
 
     private Integer getMinimum() {
-        return Integer.valueOf(cronField.getValue().split(ALL_VALUES_WITH_INTERVAL_STARTING_TOKEN)[0]);
+        return Integer.valueOf(cronField.getValue().split(SLASH_TOKEN)[0]);
     }
 
     private Integer getMaximum() {
@@ -32,6 +35,6 @@ public class SlashInterpreter extends AbstractInterpreter {
     }
 
     private Integer getStep() {
-        return Integer.valueOf(cronField.getValue().split(ALL_VALUES_WITH_INTERVAL_STARTING_TOKEN)[1]);
+        return Integer.valueOf(cronField.getValue().split(SLASH_TOKEN)[1]);
     }
 }

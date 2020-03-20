@@ -9,7 +9,9 @@ public abstract class InterpreterFactory {
 
     public static AbstractInterpreter getInterpreter(CronField cronField) {
 
-        if (isStarSlashType(cronField)) {
+        if (isRangeSlashInterpreter(cronField)) {
+            return new RangeSlashInterpreter(cronField);
+        } else if (isStarSlashType(cronField)) {
             return new StarSlashInterpreter(cronField);
         } else if (isAllValuesType(cronField)) {
             return new StarInterpreter(cronField);
@@ -19,6 +21,8 @@ public abstract class InterpreterFactory {
             return new ListInterpreter(cronField);
         } else if (isSlashType(cronField)) {
             return new SlashInterpreter(cronField);
+        } else if (isNoSpecificValueType(cronField)) {
+            return new NoSpecificValueInterpreter(cronField);
         } else {
             return new SingleValueInterpreter(cronField);
         }

@@ -14,9 +14,10 @@ public class StarInterpreter extends AbstractInterpreter {
 
     @Override
     public List<String> interpret() {
-
         List<String> executionTimes = new ArrayList<>();
-        for (int i = getMinimum(); i <= getMaximum(); i++) {
+        Integer start = getMinimum();
+        Integer end = getMaximum();
+        for (int i = start; i <= end; i++) {
             executionTimes.add(String.valueOf(i));
         }
         return executionTimes;
