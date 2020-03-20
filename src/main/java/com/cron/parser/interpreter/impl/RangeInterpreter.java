@@ -4,6 +4,7 @@ import com.cron.parser.interpreter.AbstractInterpreter;
 import com.cron.parser.model.CronField;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class RangeInterpreter extends AbstractInterpreter {
 
@@ -11,10 +12,8 @@ public class RangeInterpreter extends AbstractInterpreter {
         super(cronField);
     }
 
-    //TODO: Create another abstract interpreter factory for field types to avoid duplication at this level
-
     @Override
-    public void interpret() {
-        System.out.println(Arrays.asList(cronField.getValue().split("-")));
+    public List<String> interpret() {
+        return Arrays.asList(cronField.getValue().split("-"));
     }
 }

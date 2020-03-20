@@ -6,9 +6,9 @@ import com.cron.parser.model.CronField;
 import java.util.Arrays;
 import java.util.List;
 
-public class SingleValueInterpreter extends AbstractInterpreter {
+public class CommandInterpreter extends AbstractInterpreter {
 
-    public SingleValueInterpreter(CronField cronField) {
+    public CommandInterpreter(CronField cronField) {
         super(cronField);
     }
 

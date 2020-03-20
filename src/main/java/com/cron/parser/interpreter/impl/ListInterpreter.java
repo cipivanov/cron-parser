@@ -4,6 +4,7 @@ import com.cron.parser.interpreter.AbstractInterpreter;
 import com.cron.parser.model.CronField;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ListInterpreter extends AbstractInterpreter {
 
@@ -12,7 +13,7 @@ public class ListInterpreter extends AbstractInterpreter {
     }
 
     @Override
-    public void interpret() {
-        System.out.println(Arrays.asList(cronField.getValue().split(",")));
+    public List<String> interpret() {
+        return Arrays.asList(cronField.getValue().split(","));
     }
 }

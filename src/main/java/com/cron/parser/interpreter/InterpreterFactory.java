@@ -15,6 +15,8 @@ public abstract class InterpreterFactory {
             return new RangeInterpreter(cronField);
         } else if (cronField.getValue().contains(",")) {
             return new ListInterpreter(cronField);
+        } else if (cronField.getValue().contains("/")) {
+            return new CommandInterpreter(cronField);
         } else {
             return new SingleValueInterpreter(cronField);
         }
