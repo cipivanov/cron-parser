@@ -4,6 +4,7 @@ import com.cron.parser.interpreter.AbstractInterpreter;
 import com.cron.parser.model.CronField;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class SingleValueInterpreter extends AbstractInterpreter {
@@ -14,6 +15,6 @@ public class SingleValueInterpreter extends AbstractInterpreter {
 
     @Override
     public List<String> interpret() {
-        return Arrays.asList(cronField.getValue());
+        return Collections.singletonList(cronField.getValue());
     }
 }

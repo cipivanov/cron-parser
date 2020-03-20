@@ -6,6 +6,8 @@ import com.cron.parser.model.CronField;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.cron.parser.util.CronUtils.LIST_TOKEN;
+
 public class ListInterpreter extends AbstractInterpreter {
 
     public ListInterpreter(CronField cronField) {
@@ -14,6 +16,6 @@ public class ListInterpreter extends AbstractInterpreter {
 
     @Override
     public List<String> interpret() {
-        return Arrays.asList(cronField.getValue().split(","));
+        return Arrays.asList(cronField.getValue().split(LIST_TOKEN));
     }
 }

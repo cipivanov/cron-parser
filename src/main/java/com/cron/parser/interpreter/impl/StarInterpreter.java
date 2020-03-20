@@ -14,10 +14,19 @@ public class StarInterpreter extends AbstractInterpreter {
 
     @Override
     public List<String> interpret() {
-        List<String> result = new ArrayList<>();
-        for (int i = cronField.getType().getRange().getMinimum(); i <= cronField.getType().getRange().getMaximum(); i++) {
-            result.add(String.valueOf(i));
+
+        List<String> executionTimes = new ArrayList<>();
+        for (int i = getMinimum(); i <= getMaximum(); i++) {
+            executionTimes.add(String.valueOf(i));
         }
-        return result;
+        return executionTimes;
+    }
+
+    private Integer getMinimum() {
+        return cronField.getType().getRange().getMinimum();
+    }
+
+    private Integer getMaximum() {
+        return cronField.getType().getRange().getMaximum();
     }
 }

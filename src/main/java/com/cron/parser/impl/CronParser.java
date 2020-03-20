@@ -4,7 +4,6 @@ import com.cron.parser.Parser;
 import com.cron.parser.interpreter.InterpreterFactory;
 import com.cron.parser.model.CronField;
 import com.cron.parser.model.FieldType;
-import com.cron.parser.util.StringUtils;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -13,37 +12,63 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.cron.parser.model.FieldType.*;
+import static com.cron.parser.util.RegexUtils.getFirstMatch;
+import static com.cron.parser.util.RegexUtils.getMatchGroup;
 
 
 public class CronParser implements Parser {
 
-    public void parse(String expression) {
-        interpret(getListOfCronFields(expression));
+    private static final String OUTPUT_ROW_FORMAT = "%-14s %s\n";
+
+    private static final String COMMAND_OUTPUT_ALIAS = "command";
+    private static final String COMMAND_PLACEHOLDER = "<no command>";
+
+    private static final String COMMAND_REGEX = "(?:\\S{1,}\\s){5}(.*)";
+    private static final String CRON_EXPRESSION_REGEX = "(?:\\S{1,}\\s){4}(?:\\S{1,})";
+
+    public String parse(String expression) {
+        String command = getCronCommand(expression);
+        List<CronField> cronFields = getCronFields(expression);
+        Map<FieldType, List<String>> interpretationResult = interpret(cronFields);
+
+        return formatInterpretationResult(interpretationResult, command);
     }
 
-    private void interpret(List<CronField> cronExpression) {
+    public Map<FieldType, List<String>> interpret(List<CronField> cronExpression) {
         Map<FieldType, List<String>> result = new LinkedHashMap<>();
         cronExpression.forEach(cronField ->
                 result.put(cronField.getType(), InterpreterFactory.getInterpreter(cronField).interpret()));
 
-        System.out.println(StringUtils.formatCronResult(result));
+        return result;
     }
 
-    private List<CronField> getListOfCronFields(String cronExpression) {
-        List<String> fields = Stream.of(cronExpression)
-                .map(expression -> expression.split("\\s+"))
+    private List<CronField> getCronFields(String expression) {
+        String cronExpression = getFirstMatch(expression, CRON_EXPRESSION_REGEX)
+                .orElseThrow(() -> new RuntimeException("Not a valid Cron expression"));
+
+        List<String> cronFields = Stream.of(cronExpression)
+                .map(fields -> fields.split("\\s+"))
                 .flatMap(Arrays::stream)
                 .collect(Collectors.toList());
 
-        //TODo: A better/safer way to create the CronFields
-        return Arrays.asList(
-                new CronField(MINUTE, fields.get(0)),
-                new CronField(HOUR, fields.get(1)),
-                new CronField(DAY_OF_THE_MONTH, fields.get(2)),
-                new CronField(MONTH_OF_THE_YEAR, fields.get(3)),
-                new CronField(DAY_OF_THE_WEEK, fields.get(4)),
-                new CronField(COMMAND, fields.get(5))
-        );
+        return Stream.of(FieldType.values())
+                .map(fieldType -> new CronField(fieldType, cronFields.get(fieldType.getPosition())))
+                .collect(Collectors.toList());
+    }
+
+    private String getCronCommand(String cronExpression) {
+        return getMatchGroup(cronExpression, COMMAND_REGEX, 1).orElse(COMMAND_PLACEHOLDER);
+    }
+
+
+    private String formatInterpretationResult(Map<FieldType, List<String>> result, String command) {
+        StringBuffer formattedInterpretationResult = new StringBuffer();
+        result.forEach((fieldType, value) -> formattedInterpretationResult
+                .append(String.format(OUTPUT_ROW_FORMAT, fieldType.getAlias(), String.join(" ", value))));
+
+        String formattedCommand = String.format(OUTPUT_ROW_FORMAT, COMMAND_OUTPUT_ALIAS, command);
+        formattedInterpretationResult.append(formattedCommand);
+
+        return formattedInterpretationResult.toString();
     }
 }

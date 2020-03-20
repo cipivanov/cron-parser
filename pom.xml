@@ -36,12 +36,5 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
         </dependency>
-
-        <!-- Get rid of hte commons library. Implement a own Range type-->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${apache.commons.version}</version>
-        </dependency>
     </dependencies>
 </project>

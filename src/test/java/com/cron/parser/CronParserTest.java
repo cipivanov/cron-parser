@@ -1,22 +1,26 @@
 package com.cron.parser;
 
-import com.cron.parser.impl.CronParser;
+import com.cron.parser.interpreter.impl.ListInterpreter;
+import com.cron.parser.model.CronField;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static com.cron.parser.model.FieldType.MINUTE;
 
 public class CronParserTest {
 
-    private CronParser cronParser = new CronParser();
-
     @Test
-    public void shouldEvaluateCronExpressionAndPrintResult() {
-        cronParser.parse("*/15 0 1,15 * 1-5 /usr/bin/find");
-        System.out.println("-------------------------------------------");
-        cronParser.parse("0 11 11 11 11 /usr/bin/find");
-        System.out.println("-------------------------------------------");
-        //TODO: Remains to investigate if the case is a valid one 1/5
-        cronParser.parse("0 0 12 1/5 * /usr/bin/find");
-        System.out.println("-------------------------------------------");
-        cronParser.parse("0 0-5 14 * * /usr/bin/find");
-        System.out.println("-------------------------------------------");
+    public void shouldInterpretMinuteList() {
+        CronField cronField = new CronField(MINUTE, "0,15,30,45");
+
+        ListInterpreter listInterpreter = new ListInterpreter(cronField);
+        List<String> expectedResult = Arrays.asList("0", "15", "30", "45");
+        assert listInterpreter.interpret().equals(expectedResult);
     }
+
+    //TODO: Write test for all combinations of field position and type
+    //TODO: Write test for factory class
+    //TODO: Write test for output string of the parser itself
 }

@@ -6,11 +6,11 @@ import com.cron.parser.model.CronField;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cron.parser.util.CronUtils.ALL_VALUES_WITH_INTERVAL_STARTING_TOKEN;
+import static com.cron.parser.util.CronUtils.ALL_VALUES_WITH_INTERVAL_TOKEN;
 
-public class SlashInterpreter extends AbstractInterpreter {
+public class StarSlashInterpreter extends AbstractInterpreter {
 
-    public SlashInterpreter(CronField cronField) {
+    public StarSlashInterpreter(CronField cronField) {
         super(cronField);
     }
 
@@ -24,7 +24,7 @@ public class SlashInterpreter extends AbstractInterpreter {
     }
 
     private Integer getMinimum() {
-        return Integer.valueOf(cronField.getValue().split(ALL_VALUES_WITH_INTERVAL_STARTING_TOKEN)[0]);
+        return cronField.getType().getRange().getMinimum();
     }
 
     private Integer getMaximum() {
@@ -32,6 +32,6 @@ public class SlashInterpreter extends AbstractInterpreter {
     }
 
     private Integer getStep() {
-        return Integer.valueOf(cronField.getValue().split(ALL_VALUES_WITH_INTERVAL_STARTING_TOKEN)[1]);
+        return Integer.valueOf(cronField.getValue().replace(ALL_VALUES_WITH_INTERVAL_TOKEN, ""));
     }
 }

@@ -1,26 +1,23 @@
 package com.cron.parser.model;
 
-import org.apache.commons.lang3.Range;
+import com.cron.parser.util.Range;
 
 public enum FieldType {
 
-    MINUTE(Range.between(0, 59), "minute"),
-    HOUR(Range.between(0, 23), "hour"),
-    DAY_OF_THE_MONTH(Range.between(1, 31), "day of month"),
-    MONTH_OF_THE_YEAR(Range.between(1, 12), "month"),
-    DAY_OF_THE_WEEK(Range.between(1, 7), "day of week"),
-    COMMAND("command");
+    MINUTE(Range.between(0, 59), "minute", 0),
+    HOUR(Range.between(0, 23), "hour", 1),
+    DAY_OF_THE_MONTH(Range.between(1, 31), "day of month", 2),
+    MONTH_OF_THE_YEAR(Range.between(1, 12), "month", 3),
+    DAY_OF_THE_WEEK(Range.between(1, 7), "day of week", 4);
 
     public String alias;
+    private Integer position;
     public Range<Integer> range;
 
-    FieldType(Range<Integer> range, String alias) {
+    FieldType(Range<Integer> range, String alias, Integer position) {
         this.range = range;
         this.alias = alias;
-    }
-
-    FieldType(String alias) {
-        this.alias = alias;
+        this.position = position;
     }
 
     public Range<Integer> getRange() {
@@ -29,5 +26,9 @@ public enum FieldType {
 
     public String getAlias() {
         return alias;
+    }
+
+    public Integer getPosition() {
+        return position;
     }
 }
