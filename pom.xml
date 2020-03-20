@@ -27,7 +27,6 @@
 
         <!-- Testing dependencies -->
         <junit.version>4.12</junit.version>
-        <apache.commons.version>3.7</apache.commons.version>
     </properties>
 
     <dependencies>
